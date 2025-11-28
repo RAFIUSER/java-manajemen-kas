@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="manajemen-kas">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/manajemen-kas.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
