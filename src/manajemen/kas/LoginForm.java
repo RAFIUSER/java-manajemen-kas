@@ -1,24 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package manajemen.kas;
 
-import services.DBConnection;
+import manajemen.kas.dao.UserDAO;
+import manajemen.kas.model.User;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author ASPIRESS
  */
 public class LoginForm extends javax.swing.JFrame {
-    
+
+    private final UserDAO userDAO = new UserDAO();
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginForm.class.getName());
 
     /**
      * Creates new form LoginForm
      */
     public LoginForm() {
-        initComponents();        
+        initComponents();
     }
 
     /**
@@ -92,12 +92,54 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
+        String usernameInput = inputUsername.getText();
+        String passwordInput = String.valueOf(inputPassword.getPassword());
+
+        if (usernameInput.isEmpty() || passwordInput.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Username dan Password tidak boleh kosong.",
+                    "Input Error",
+                    JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        User user = userDAO.authenticateUser(usernameInput, passwordInput);
+
+        if (user == null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Username atau Password salah. Silakan coba lagi.",
+                    "Login Gagal",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            inputPassword.setText("");
+        }
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Login Berhasil! Selamat datang, " + user.getNamaLengkap(),
+                "Sukses",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+        
+        PemasukanForm pemasukanForm = new PemasukanForm();
+        pemasukanForm.setVisible(true);
+        this.dispose();
+        // 2b. Lanjutkan ke halaman utama (Contoh: Menutup LoginForm dan Membuka MainMenu)
+        // Contoh membuka Main Menu (asumsi Anda punya kelas MainMenu)
+        // MainMenu mainMenu = new MainMenu(user); 
+        // mainMenu.setVisible(true);
+        // this.dispose(); // Tutup jendela login saat ini
+        // Karena kelas MainMenu belum ada, kita hanya tampilkan pesan sukses.
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
      * @param args the command line arguments
      */
-        public static void main(String args[]) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

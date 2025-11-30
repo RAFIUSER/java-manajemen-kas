@@ -1,7 +1,7 @@
 package manajemen.kas.dao;
 
 import manajemen.kas.model.Pengeluaran;
-import services.DBConnection;
+import manajemen.kas.services.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

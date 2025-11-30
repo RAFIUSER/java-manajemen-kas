@@ -39,17 +39,17 @@ public class PemasukanForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        inputNamaTransaksi = new javax.swing.JTextField();
+        inputTanggal = new javax.swing.JTextField();
+        inputNominalMasuk = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        inputKeterangan = new javax.swing.JTextArea();
+        btnSimpan = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TabelPemasukan = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -139,48 +139,59 @@ public class PemasukanForm extends javax.swing.JFrame {
 
         jLabel5.setText("Keterangan");
         Content.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 100, -1));
-        Content.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 480, -1));
-        Content.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 480, -1));
-        Content.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 480, 23));
+        Content.add(inputNamaTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 480, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        inputTanggal.setText("YYYY-MM-DD");
+        Content.add(inputTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 480, -1));
+        Content.add(inputNominalMasuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 480, 23));
+
+        inputKeterangan.setColumns(20);
+        inputKeterangan.setRows(5);
+        jScrollPane1.setViewportView(inputKeterangan);
 
         Content.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 480, 66));
 
-        jButton1.setText("Simpan");
-        Content.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
+        btnSimpan.setText("Simpan");
+        Content.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
 
-        jButton2.setText("Hapus");
-        Content.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 90, 40));
-
-        jButton3.setText("Perbarui");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setText("Perbarui");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
-        Content.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 90, 40));
+        Content.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 90, 40));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
-
-        Content.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 710, 480));
+        btnHapus.setText("Hapus");
+        Content.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 90, 40));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Pencatatan Pemasukan");
         Content.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 388, -1));
+
+        TabelPemasukan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "No.", "ID", "Nama Transaksi", "Tanggal", "Nominal", "Keterangan"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelPemasukan.setColumnSelectionAllowed(true);
+        jScrollPane3.setViewportView(TabelPemasukan);
+
+        Content.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 710, 480));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,9 +228,9 @@ public class PemasukanForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLaporanActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnEditActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,24 +261,24 @@ public class PemasukanForm extends javax.swing.JFrame {
     private javax.swing.JPanel Content;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Sidebar;
+    private javax.swing.JTable TabelPemasukan;
     private javax.swing.JButton btnBeranda;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnPemasukan;
     private javax.swing.JButton btnPengeluaran;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnSimpan;
+    private javax.swing.JTextArea inputKeterangan;
+    private javax.swing.JTextField inputNamaTransaksi;
+    private javax.swing.JTextField inputNominalMasuk;
+    private javax.swing.JTextField inputTanggal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }

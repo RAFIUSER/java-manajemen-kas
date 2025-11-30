@@ -1,7 +1,7 @@
 package manajemen.kas.dao;
 
 import manajemen.kas.model.Pemasukan;
-import services.DBConnection;
+import manajemen.kas.services.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,20 +9,21 @@ import java.util.List;
 
 /**
  * Data Access Object for Pemasukan (Income) transactions
- * 
+ *
  * @author ASPIRESS
  */
 public class PemasukanDAO {
 
     /**
      * Create a new income record
+     * @return Boolean
      */
     public boolean create(Pemasukan pemasukan) {
         String sql = "INSERT INTO pemasukan (namaTransaksi, tanggal, nominalMasuk, keterangan) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (var conn = DBConnection.getConnection()) {
 
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, pemasukan.getNamaTransaksi());
             stmt.setDate(2, Date.valueOf(pemasukan.getTanggal()));
             stmt.setBigDecimal(3, pemasukan.getNominalMasuk());
@@ -33,7 +34,6 @@ public class PemasukanDAO {
 
         } catch (SQLException e) {
             System.err.println("Error creating pemasukan: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
@@ -45,9 +45,7 @@ public class PemasukanDAO {
         List<Pemasukan> list = new ArrayList<>();
         String sql = "SELECT * FROM pemasukan ORDER BY tanggal DESC, id DESC";
 
-        try (Connection conn = DBConnection.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection conn = DBConnection.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Pemasukan pemasukan = new Pemasukan();
@@ -61,7 +59,6 @@ public class PemasukanDAO {
 
         } catch (SQLException e) {
             System.err.println("Error retrieving pemasukan: " + e.getMessage());
-            e.printStackTrace();
         }
 
         return list;
@@ -73,8 +70,7 @@ public class PemasukanDAO {
     public boolean update(Pemasukan pemasukan) {
         String sql = "UPDATE pemasukan SET namaTransaksi = ?, tanggal = ?, nominalMasuk = ?, keterangan = ? WHERE id = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, pemasukan.getNamaTransaksi());
             stmt.setDate(2, Date.valueOf(pemasukan.getTanggal()));
@@ -87,7 +83,6 @@ public class PemasukanDAO {
 
         } catch (SQLException e) {
             System.err.println("Error updating pemasukan: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
@@ -98,8 +93,7 @@ public class PemasukanDAO {
     public boolean delete(int id) {
         String sql = "DELETE FROM pemasukan WHERE id = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
 
@@ -108,7 +102,6 @@ public class PemasukanDAO {
 
         } catch (SQLException e) {
             System.err.println("Error deleting pemasukan: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
