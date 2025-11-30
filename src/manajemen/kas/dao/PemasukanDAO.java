@@ -16,14 +16,14 @@ public class PemasukanDAO {
 
     /**
      * Create a new income record
+     *
      * @return Boolean
      */
     public boolean create(Pemasukan pemasukan) {
         String sql = "INSERT INTO pemasukan (namaTransaksi, tanggal, nominalMasuk, keterangan) VALUES (?, ?, ?, ?)";
 
-        try (var conn = DBConnection.getConnection()) {
+        try (var conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, pemasukan.getNamaTransaksi());
             stmt.setDate(2, Date.valueOf(pemasukan.getTanggal()));
             stmt.setBigDecimal(3, pemasukan.getNominalMasuk());

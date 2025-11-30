@@ -1,22 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package manajemen.kas;
+
+import manajemen.kas.dao.PemasukanDAO;
+import manajemen.kas.model.Pemasukan;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Date;
+import javax.swing.JFrame;
 
 /**
  *
  * @author ASPIRESS
  */
 public class PemasukanForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PemasukanForm.class.getName());
+
+    private final PemasukanDAO pemasukanDAO = new PemasukanDAO();
+    private int selectedId = -1;
 
     /**
      * Creates new form PemasukanForm
      */
     public PemasukanForm() {
         initComponents();
+        loadTableData();
+    }
+    
+    private void navigateTo(JFrame targetFrame) {
+        targetFrame.setVisible(true);
+        this.dispose(); 
     }
 
     /**
@@ -40,16 +58,16 @@ public class PemasukanForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         inputNamaTransaksi = new javax.swing.JTextField();
-        inputTanggal = new javax.swing.JTextField();
         inputNominalMasuk = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         inputKeterangan = new javax.swing.JTextArea();
         btnSimpan = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TabelPemasukan = new javax.swing.JTable();
+        inputTanggal = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -69,6 +87,7 @@ public class PemasukanForm extends javax.swing.JFrame {
             }
         });
 
+        btnPemasukan.setBackground(new java.awt.Color(204, 204, 204));
         btnPemasukan.setText("Pemasukan");
         btnPemasukan.setBorderPainted(false);
         btnPemasukan.addActionListener(new java.awt.event.ActionListener() {
@@ -102,10 +121,10 @@ public class PemasukanForm extends javax.swing.JFrame {
                 .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBeranda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPemasukan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPengeluaran, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLaporan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(29, Short.MAX_VALUE))
+            .addComponent(btnPemasukan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,30 +159,29 @@ public class PemasukanForm extends javax.swing.JFrame {
         jLabel5.setText("Keterangan");
         Content.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 100, -1));
         Content.add(inputNamaTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 480, -1));
-
-        inputTanggal.setText("YYYY-MM-DD");
-        Content.add(inputTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 480, -1));
         Content.add(inputNominalMasuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 480, 23));
 
         inputKeterangan.setColumns(20);
         inputKeterangan.setRows(5);
         jScrollPane1.setViewportView(inputKeterangan);
 
-        Content.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 480, 66));
+        Content.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 480, 70));
 
         btnSimpan.setText("Simpan");
-        Content.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
-
-        btnEdit.setText("Perbarui");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
+                btnSimpanActionPerformed(evt);
             }
         });
-        Content.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 90, 40));
+        Content.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
 
         btnHapus.setText("Hapus");
-        Content.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 90, 40));
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
+        Content.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 90, 40));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Pencatatan Pemasukan");
@@ -171,10 +189,7 @@ public class PemasukanForm extends javax.swing.JFrame {
 
         TabelPemasukan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "No.", "ID", "Nama Transaksi", "Tanggal", "Nominal", "Keterangan"
@@ -189,9 +204,24 @@ public class PemasukanForm extends javax.swing.JFrame {
             }
         });
         TabelPemasukan.setColumnSelectionAllowed(true);
+        TabelPemasukan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelPemasukanMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(TabelPemasukan);
+        TabelPemasukan.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         Content.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 710, 480));
+        Content.add(inputTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 480, -1));
+
+        jButton1.setText("Clear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        Content.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 90, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,19 +248,77 @@ public class PemasukanForm extends javax.swing.JFrame {
 
     private void btnPemasukanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPemasukanActionPerformed
         // TODO add your handling code here:
+        try {
+            PemasukanForm pemasukan = new PemasukanForm();
+            navigateTo(pemasukan);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnPemasukanActionPerformed
 
     private void btnPengeluaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengeluaranActionPerformed
         // TODO add your handling code here:
+        try {
+            PengeluaranForm pengeluaran = new PengeluaranForm();
+            navigateTo(pengeluaran);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnPengeluaranActionPerformed
 
     private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLaporanActionPerformed
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditActionPerformed
+        simpanPemasukan();
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        // TODO add your handling code here:
+        deletePemasukan();
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void TabelPemasukanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelPemasukanMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = TabelPemasukan.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        try {
+            // Ambil ID (Indeks 1) dan simpan ke variabel status
+            selectedId = (int) TabelPemasukan.getModel().getValueAt(selectedRow, 1);
+
+            // Ambil dan set Nama Transaksi
+            String namaTransaksi = (String) TabelPemasukan.getModel().getValueAt(selectedRow, 2);
+            inputNamaTransaksi.setText(namaTransaksi);
+
+            // Ambil dan set Tanggal
+            LocalDate tanggal = (LocalDate) TabelPemasukan.getModel().getValueAt(selectedRow, 3);
+            inputTanggal.setDate(java.sql.Date.valueOf(tanggal)); // Asumsi inputTanggal menggunakan JDateChooser atau sejenisnya
+
+            // Ambil dan set Nominal (Masih berupa String berformat titik!)
+            String nominalFormatted = (String) TabelPemasukan.getModel().getValueAt(selectedRow, 4);
+            inputNominalMasuk.setText(nominalFormatted);
+
+            // Ambil dan set Keterangan
+            String keterangan = (String) TabelPemasukan.getModel().getValueAt(selectedRow, 5);
+            inputKeterangan.setText(keterangan);
+
+            // Opsional: Ganti teks tombol Simpan menjadi Update
+            btnSimpan.setText("Update");
+
+        } catch (Exception e) {
+            System.err.println("Error saat mengambil data dari tabel: " + e.getMessage());
+        }
+    }//GEN-LAST:event_TabelPemasukanMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        clearInput();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,13 +345,152 @@ public class PemasukanForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new PemasukanForm().setVisible(true));
     }
 
+    private void loadTableData() {
+        String[] columnNames = {"No.", "ID", "Nama Transaksi", "Tanggal", "Nominal", "Keterangan"};
+
+        DefaultTableModel model = new DefaultTableModel(null, columnNames);
+
+        List<Pemasukan> listPemasukan = pemasukanDAO.getAll();
+
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        symbols.setDecimalSeparator(',');
+        DecimalFormat formatter = new DecimalFormat("#,##0.00", symbols); // #,##0.00 -> 1.000.000,00
+
+        int no = 1;
+
+        for (Pemasukan p : listPemasukan) {
+
+            String nominalFormatted = formatter.format(p.getNominalMasuk());
+
+            Object[] row = new Object[]{
+                no++,
+                p.getId(),
+                p.getNamaTransaksi(),
+                p.getTanggal(),
+                nominalFormatted,
+                p.getKeterangan()
+            };
+
+            model.addRow(row);
+        }
+
+        TabelPemasukan.setModel(model);
+
+        if (TabelPemasukan.getColumnModel().getColumnCount() > 1) {
+            TabelPemasukan.getColumnModel().getColumn(0).setMaxWidth(40);
+            TabelPemasukan.getColumnModel().removeColumn(
+                    TabelPemasukan.getColumnModel().getColumn(1) // Ambil objek kolom pada indeks 1
+            );
+        }
+    }
+
+    private void clearInput() {
+        inputNamaTransaksi.setText("");
+        inputTanggal.setDate(new Date());
+        inputNominalMasuk.setText("");
+        inputKeterangan.setText("");
+
+        selectedId = -1;
+        btnSimpan.setText("Simpan");
+    }
+
+    private void simpanPemasukan() {
+        String namaTransaksi = inputNamaTransaksi.getText();
+        java.util.Date tanggalUtilDate = inputTanggal.getDate();
+        String nominalString = inputNominalMasuk.getText();
+        String keterangan = inputKeterangan.getText();
+
+        if (namaTransaksi.isEmpty() || tanggalUtilDate == null || nominalString.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama Transaksi, Tanggal, dan Nominal harus diisi.", "Input Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        LocalDate tanggal;
+        BigDecimal nominalMasuk;
+
+        try {
+            tanggal = tanggalUtilDate.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            String cleanedNominalString = nominalString.replace(".", "");
+            cleanedNominalString = cleanedNominalString.replace(",", ".");
+
+            nominalMasuk = new BigDecimal(cleanedNominalString);
+
+            if (nominalMasuk.compareTo(BigDecimal.ZERO) <= 0) {
+                JOptionPane.showMessageDialog(this, "Nominal harus lebih besar dari nol.", "Input Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Nominal Masuk harus berupa angka yang valid.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Pemasukan pemasukanBaru = new Pemasukan();
+        pemasukanBaru.setNamaTransaksi(namaTransaksi);
+        pemasukanBaru.setTanggal(tanggal);
+        pemasukanBaru.setNominalMasuk(nominalMasuk);
+        pemasukanBaru.setKeterangan(keterangan);
+
+        boolean sukses;
+
+        if (selectedId != -1) {
+            pemasukanBaru.setId(selectedId);
+            sukses = pemasukanDAO.update(pemasukanBaru);
+        } else {
+            sukses = pemasukanDAO.create(pemasukanBaru);
+        }
+
+        if (sukses) {
+            String pesan = (selectedId != -1) ? "Data berhasil diperbarui." : "Data pemasukan berhasil disimpan.";
+            JOptionPane.showMessageDialog(this, pesan, "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+            clearInput();
+            loadTableData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Operasi database gagal. Cek log error.", "Gagal", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void deletePemasukan() {
+
+        int selectedRow = TabelPemasukan.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih data yang ingin dihapus terlebih dahulu.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idToDelete = (int) TabelPemasukan.getValueAt(selectedRow, 1);
+        String namaTransaksi = (String) TabelPemasukan.getValueAt(selectedRow, 2);
+
+        int konfirmasi = JOptionPane.showConfirmDialog(this,
+                "Apakah Anda yakin ingin menghapus transaksi '" + namaTransaksi + "'?",
+                "Konfirmasi Hapus",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (konfirmasi == JOptionPane.YES_OPTION) {
+            boolean sukses = pemasukanDAO.delete(idToDelete);
+
+            if (sukses) {
+                JOptionPane.showMessageDialog(this, "Data berhasil dihapus.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                loadTableData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal menghapus data di database.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Content;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Sidebar;
     private javax.swing.JTable TabelPemasukan;
     private javax.swing.JButton btnBeranda;
-    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnPemasukan;
@@ -272,7 +499,8 @@ public class PemasukanForm extends javax.swing.JFrame {
     private javax.swing.JTextArea inputKeterangan;
     private javax.swing.JTextField inputNamaTransaksi;
     private javax.swing.JTextField inputNominalMasuk;
-    private javax.swing.JTextField inputTanggal;
+    private com.toedter.calendar.JDateChooser inputTanggal;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

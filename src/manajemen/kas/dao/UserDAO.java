@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package manajemen.kas.dao;
 
 import java.sql.Connection;
@@ -48,5 +44,81 @@ public class UserDAO {
         }
 
         return user;
+    }
+    
+    /**
+     * Menambahkan User baru 
+     */
+    public boolean create(User user) {
+        String sql = "INSERT INTO users (username, password, namaLengkap, email) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
+            stmt.setString(3, user.getNamaLengkap());
+            stmt.setString(4, user.getEmail());
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error creating user: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Mendapatkan User berdasarkan ID
+     */
+    public User getUserById(int id) {
+        String sql = "SELECT * FROM user WHERE id = ?";
+        User user = null;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setNamaLengkap(rs.getString("namaLengkap"));
+                    user.setEmail(rs.getString("email"));
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error retrieving user by ID: " + e.getMessage());
+        }
+        return user;
+    }
+
+    /**
+     * Mengupdate data User
+     */
+    public boolean update(User user) {
+        String sql = "UPDATE user SET username = ?, password = ?, namaLengkap = ?, email = ? WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getPassword());
+            stmt.setString(3, user.getNamaLengkap());
+            stmt.setString(4, user.getEmail());
+            stmt.setInt(5, user.getId()); // WHERE ID
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error updating user: " + e.getMessage());
+            return false;
+        }
     }
 }

@@ -4,6 +4,8 @@
  */
 package manajemen.kas;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author ASPIRESS
@@ -17,6 +19,11 @@ public class PengeluaranForm extends javax.swing.JFrame {
      */
     public PengeluaranForm() {
         initComponents();
+    }
+    
+    private void navigateTo(JFrame targetFrame) {
+        targetFrame.setVisible(true);
+        this.dispose(); 
     }
 
     /**
@@ -76,6 +83,7 @@ public class PengeluaranForm extends javax.swing.JFrame {
             }
         });
 
+        btnPengeluaran.setBackground(new java.awt.Color(204, 204, 204));
         btnPengeluaran.setText("Pengeluaran");
         btnPengeluaran.setBorderPainted(false);
         btnPengeluaran.addActionListener(new java.awt.event.ActionListener() {
@@ -102,9 +110,9 @@ public class PengeluaranForm extends javax.swing.JFrame {
                     .addComponent(Logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBeranda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPemasukan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPengeluaran, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLaporan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(29, Short.MAX_VALUE))
+            .addComponent(btnPengeluaran, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,10 +161,10 @@ public class PengeluaranForm extends javax.swing.JFrame {
         btnSimpan.setText("Simpan");
         Content.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
 
-        btnHapus.setText("Hapus");
+        btnHapus.setText("Clear");
         Content.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 90, 40));
 
-        btnEdit.setText("Perbarui");
+        btnEdit.setText("Hapus");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -218,6 +226,12 @@ public class PengeluaranForm extends javax.swing.JFrame {
 
     private void btnPemasukanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPemasukanActionPerformed
         // TODO add your handling code here:
+        try {
+            PemasukanForm pemasukan = new PemasukanForm();
+            navigateTo(pemasukan);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnPemasukanActionPerformed
 
     private void btnPengeluaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengeluaranActionPerformed
