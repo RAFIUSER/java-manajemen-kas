@@ -5,26 +5,16 @@ import java.time.LocalDate;
 
 /**
  * Model class for expense (Pengeluaran) transactions
- * 
+ *
  * @author ASPIRESS
  */
 public class Pengeluaran {
+
     private int id;
     private String namaTransaksi;
     private LocalDate tanggal;
     private BigDecimal nominalKeluar;
     private String keterangan;
-
-    public Pengeluaran() {
-    }
-
-    public Pengeluaran(int id, String namaTransaksi, LocalDate tanggal, BigDecimal nominalKeluar, String keterangan) {
-        this.id = id;
-        this.namaTransaksi = namaTransaksi;
-        this.tanggal = tanggal;
-        this.nominalKeluar = nominalKeluar;
-        this.keterangan = keterangan;
-    }
 
     public int getId() {
         return id;
@@ -68,12 +58,24 @@ public class Pengeluaran {
 
     @Override
     public String toString() {
-        return "Pengeluaran{" +
-                "id=" + id +
-                ", namaTransaksi='" + namaTransaksi + '\'' +
-                ", tanggal=" + tanggal +
-                ", nominalKeluar=" + nominalKeluar +
-                ", keterangan='" + keterangan + '\'' +
-                '}';
+        return "Pengeluaran{"
+                + "id=" + id
+                + ", namaTransaksi='" + namaTransaksi + '\''
+                + ", tanggal=" + tanggal
+                + ", nominalKeluar=" + nominalKeluar
+                + ", keterangan='" + keterangan + '\''
+                + '}';
     }
+
+    public Pengeluaran() {
+    }
+
+    public Pengeluaran(int id, String namaTransaksi, LocalDate tanggal, BigDecimal nominalKeluar, String keterangan) {
+        this.id = id;
+        this.namaTransaksi = namaTransaksi;
+        this.tanggal = tanggal;
+        this.nominalKeluar = nominalKeluar;
+        this.keterangan = keterangan;
+    }
+
 }

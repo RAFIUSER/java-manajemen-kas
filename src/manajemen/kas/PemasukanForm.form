@@ -55,17 +55,23 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="Logo" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btnBeranda" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btnPengeluaran" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btnLaporan" alignment="0" max="32767" attributes="0"/>
+              <Component id="btnPemasukan" alignment="1" max="32767" attributes="0"/>
+              <Component id="btnLaporan" alignment="1" max="32767" attributes="0"/>
+              <Component id="btnPengeluaran" alignment="1" max="32767" attributes="0"/>
+              <Component id="btnBeranda" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="Logo" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                          <Component id="btnLogout" min="-2" pref="121" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace pref="29" max="32767" attributes="0"/>
               </Group>
-              <Component id="btnPemasukan" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -82,6 +88,8 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnLaporan" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btnLogout" min="-2" pref="35" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -90,7 +98,7 @@
         <Component class="javax.swing.JLabel" name="Logo">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/manajemen/kas/AppsLogo.png"/>
+              <Image iconType="3" name="/manajemen/kas/assets/AppsLogo.png"/>
             </Property>
           </Properties>
         </Component>
@@ -134,6 +142,17 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaporanActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnLogout">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/manajemen/kas/assets/log-out.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Log Out"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogoutActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

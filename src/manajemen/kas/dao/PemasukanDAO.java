@@ -1,5 +1,6 @@
 package manajemen.kas.dao;
 
+import java.math.BigDecimal;
 import manajemen.kas.model.Pemasukan;
 import manajemen.kas.services.DBConnection;
 
@@ -104,5 +105,33 @@ public class PemasukanDAO {
             System.err.println("Error deleting pemasukan: " + e.getMessage());
             return false;
         }
+    }
+
+    /**
+     * Menghitung total nominal dari semua record pemasukan.
+     *
+     * @return Total pemasukan dalam BigDecimal.
+     */
+    public BigDecimal getTotalPemasukan() {
+        String sql = "SELECT SUM(nominalMasuk) AS total FROM pemasukan";
+
+        BigDecimal total = BigDecimal.ZERO;
+
+        try (Connection conn = DBConnection.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next()) {
+                total = rs.getBigDecimal("total");
+
+                if (total == null) {
+                    total = BigDecimal.ZERO;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error menghitung total pengeluaran: " + e.getMessage());
+            return BigDecimal.ZERO;
+        }
+
+        return total;
     }
 }

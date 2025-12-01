@@ -4,26 +4,41 @@
  */
 package manajemen.kas;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import manajemen.kas.dao.PengeluaranDAO;
+import manajemen.kas.model.Pengeluaran;
 
 /**
  *
  * @author ASPIRESS
  */
 public class PengeluaranForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PengeluaranForm.class.getName());
+
+    private final PengeluaranDAO pengeluaranDAO = new PengeluaranDAO();
+    private int selectedId = -1;
 
     /**
      * Creates new form PengeluaranForm
      */
     public PengeluaranForm() {
         initComponents();
+        loadTableData();
     }
-    
+
     private void navigateTo(JFrame targetFrame) {
         targetFrame.setVisible(true);
-        this.dispose(); 
+        this.dispose();
     }
 
     /**
@@ -41,30 +56,32 @@ public class PengeluaranForm extends javax.swing.JFrame {
         btnPemasukan = new javax.swing.JButton();
         btnPengeluaran = new javax.swing.JButton();
         btnLaporan = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
         Content = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         inputNamaTransaksi = new javax.swing.JTextField();
-        inputTanggal = new javax.swing.JTextField();
         inputNominalKeluar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         inputKeterangan = new javax.swing.JTextArea();
         btnSimpan = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TabelPengeluaran = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        inputTanggal = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         Sidebar.setBackground(new java.awt.Color(255, 255, 255));
         Sidebar.setForeground(new java.awt.Color(255, 255, 255));
         Sidebar.setPreferredSize(new java.awt.Dimension(225, 750));
 
-        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/AppsLogo.png"))); // NOI18N
+        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/assets/AppsLogo.png"))); // NOI18N
 
         btnBeranda.setText("Beranda");
         btnBeranda.setBorderPainted(false);
@@ -100,19 +117,31 @@ public class PengeluaranForm extends javax.swing.JFrame {
             }
         });
 
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/assets/log-out.png"))); // NOI18N
+        btnLogout.setText("Log Out");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
         Sidebar.setLayout(SidebarLayout);
         SidebarLayout.setHorizontalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBeranda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPemasukan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLaporan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
             .addComponent(btnPengeluaran, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnPemasukan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnBeranda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLaporan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(SidebarLayout.createSequentialGroup()
+                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SidebarLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(Logo))
+                    .addGroup(SidebarLayout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +156,9 @@ public class PengeluaranForm extends javax.swing.JFrame {
                 .addComponent(btnPengeluaran, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         Content.setBackground(new java.awt.Color(255, 255, 255));
@@ -147,9 +178,6 @@ public class PengeluaranForm extends javax.swing.JFrame {
         jLabel5.setText("Keterangan");
         Content.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 100, -1));
         Content.add(inputNamaTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 480, -1));
-
-        inputTanggal.setText("YYYY-MM-DD");
-        Content.add(inputTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 480, -1));
         Content.add(inputNominalKeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 480, 23));
 
         inputKeterangan.setColumns(20);
@@ -159,18 +187,28 @@ public class PengeluaranForm extends javax.swing.JFrame {
         Content.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 480, 66));
 
         btnSimpan.setText("Simpan");
-        Content.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
-
-        btnHapus.setText("Clear");
-        Content.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 90, 40));
-
-        btnEdit.setText("Hapus");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
+                btnSimpanActionPerformed(evt);
             }
         });
-        Content.add(btnEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 90, 40));
+        Content.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+        Content.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 90, 40));
+
+        btnHapus.setText("Hapus");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
+        Content.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 90, 40));
 
         TabelPengeluaran.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -200,6 +238,7 @@ public class PengeluaranForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Pencatatan Pengeluaran");
         Content.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 388, -1));
+        Content.add(inputTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 480, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,6 +261,12 @@ public class PengeluaranForm extends javax.swing.JFrame {
 
     private void btnBerandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBerandaActionPerformed
         // TODO add your handling code here:
+        try {
+            BerandaView beranda = new BerandaView();
+            navigateTo(beranda);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnBerandaActionPerformed
 
     private void btnPemasukanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPemasukanActionPerformed
@@ -236,15 +281,42 @@ public class PengeluaranForm extends javax.swing.JFrame {
 
     private void btnPengeluaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPengeluaranActionPerformed
         // TODO add your handling code here:
+        try {
+            PengeluaranForm pengeluaran = new PengeluaranForm();
+            navigateTo(pengeluaran);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnPengeluaranActionPerformed
 
     private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLaporanActionPerformed
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditActionPerformed
+        deletePengeluaran();
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        // TODO add your handling code here:
+        simpanPengeluaran();
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        clearInput();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        try {
+            LoginForm login = new LoginForm();
+            navigateTo(login);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,22 +343,158 @@ public class PengeluaranForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new PengeluaranForm().setVisible(true));
     }
 
+    private void loadTableData() {
+        String[] columnNames = {"No.", "ID", "Nama Transaksi", "Tanggal", "Nominal", "Keterangan"};
+
+        DefaultTableModel model = new DefaultTableModel(null, columnNames);
+
+        List<Pengeluaran> listPengeluaran = pengeluaranDAO.getAll();
+
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        symbols.setDecimalSeparator(',');
+        DecimalFormat formatter = new DecimalFormat("#,##0.00", symbols); // #,##0.00 -> 1.000.000,00
+
+        int no = 1;
+
+        for (Pengeluaran p : listPengeluaran) {
+
+            String nominalFormatted = formatter.format(p.getNominalKeluar());
+
+            Object[] row = new Object[]{
+                no++,
+                p.getId(),
+                p.getNamaTransaksi(),
+                p.getTanggal(),
+                nominalFormatted,
+                p.getKeterangan()
+            };
+
+            model.addRow(row);
+        }
+
+        TabelPengeluaran.setModel(model);
+
+        TabelPengeluaran.getColumnModel().getColumn(0).setMaxWidth(40);
+        TabelPengeluaran.getColumnModel().getColumn(1).setMaxWidth(40);
+    }
+
+    private void clearInput() {
+        inputNamaTransaksi.setText("");
+        inputTanggal.setDate(new Date());
+        inputNominalKeluar.setText("");
+        inputKeterangan.setText("");
+
+        selectedId = -1;
+        btnSimpan.setText("Simpan");
+    }
+
+    private void simpanPengeluaran() {
+        String namaTransaksi = inputNamaTransaksi.getText();
+        java.util.Date tanggalUtilDate = inputTanggal.getDate();
+        String nominalString = inputNominalKeluar.getText();
+        String keterangan = inputKeterangan.getText();
+
+        if (namaTransaksi.isEmpty() || tanggalUtilDate == null || nominalString.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nama Transaksi, Tanggal, dan Nominal harus diisi.", "Input Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        LocalDate tanggal;
+        BigDecimal nominalMasuk;
+
+        try {
+            tanggal = tanggalUtilDate.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+
+            String cleanedNominalString = nominalString.replace(".", "");
+            cleanedNominalString = cleanedNominalString.replace(",", ".");
+
+            nominalMasuk = new BigDecimal(cleanedNominalString);
+
+            if (nominalMasuk.compareTo(BigDecimal.ZERO) <= 0) {
+                JOptionPane.showMessageDialog(this, "Nominal harus lebih besar dari nol.", "Input Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Nominal Masuk harus berupa angka yang valid.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Pengeluaran pengeluaranBaru = new Pengeluaran();
+        pengeluaranBaru.setNamaTransaksi(namaTransaksi);
+        pengeluaranBaru.setTanggal(tanggal);
+        pengeluaranBaru.setNominalKeluar(nominalMasuk);
+        pengeluaranBaru.setKeterangan(keterangan);
+
+        boolean sukses;
+
+        if (selectedId != -1) {
+            pengeluaranBaru.setId(selectedId);
+            sukses = pengeluaranDAO.update(pengeluaranBaru);
+        } else {
+            sukses = pengeluaranDAO.create(pengeluaranBaru);
+        }
+
+        if (sukses) {
+            String pesan = (selectedId != -1) ? "Data berhasil diperbarui." : "Data pemasukan berhasil disimpan.";
+            JOptionPane.showMessageDialog(this, pesan, "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+            clearInput();
+            loadTableData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Operasi database gagal. Cek log error.", "Gagal", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void deletePengeluaran() {
+        int selectedRow = TabelPengeluaran.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih data yang ingin dihapus terlebih dahulu.", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idToDelete = (int) TabelPengeluaran.getValueAt(selectedRow, 1);
+        String namaTransaksi = (String) TabelPengeluaran.getValueAt(selectedRow, 2);
+
+        int konfirmasi = JOptionPane.showConfirmDialog(this,
+                "Apakah Anda yakin ingin menghapus transaksi '" + namaTransaksi + "'?",
+                "Konfirmasi Hapus",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (konfirmasi == JOptionPane.YES_OPTION) {
+            boolean sukses = pengeluaranDAO.delete(idToDelete);
+
+            if (sukses) {
+                JOptionPane.showMessageDialog(this, "Data berhasil dihapus.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                loadTableData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal menghapus data di database.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Content;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Sidebar;
     private javax.swing.JTable TabelPengeluaran;
     private javax.swing.JButton btnBeranda;
-    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnLaporan;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPemasukan;
     private javax.swing.JButton btnPengeluaran;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JTextArea inputKeterangan;
     private javax.swing.JTextField inputNamaTransaksi;
     private javax.swing.JTextField inputNominalKeluar;
-    private javax.swing.JTextField inputTanggal;
+    private com.toedter.calendar.JDateChooser inputTanggal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

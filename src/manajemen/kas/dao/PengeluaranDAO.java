@@ -1,5 +1,6 @@
 package manajemen.kas.dao;
 
+import java.math.BigDecimal;
 import manajemen.kas.model.Pengeluaran;
 import manajemen.kas.services.DBConnection;
 
@@ -16,6 +17,9 @@ public class PengeluaranDAO {
 
     /**
      * Create a new expense record
+     *
+     * @param pengeluaran data
+     * @return true if success, false if not
      */
     public boolean create(Pengeluaran pengeluaran) {
         String sql = "INSERT INTO pengeluaran (namaTransaksi, tanggal, nominalKeluar, keterangan) VALUES (?, ?, ?, ?)";
@@ -32,7 +36,6 @@ public class PengeluaranDAO {
 
         } catch (SQLException e) {
             System.err.println("Error creating pengeluaran: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
@@ -58,7 +61,6 @@ public class PengeluaranDAO {
 
         } catch (SQLException e) {
             System.err.println("Error retrieving pengeluaran: " + e.getMessage());
-            e.printStackTrace();
         }
 
         return list;
@@ -106,5 +108,33 @@ public class PengeluaranDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * Menghitung total nominal dari semua record pengeluaran.
+     *
+     * @return Total pengeluaran dalam BigDecimal.
+     */
+    public BigDecimal getTotalPengeluaran() {
+        String sql = "SELECT SUM(nominalKeluar) AS total FROM pengeluaran";
+
+        BigDecimal total = BigDecimal.ZERO;
+
+        try (Connection conn = DBConnection.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next()) {
+                total = rs.getBigDecimal("total");
+
+                if (total == null) {
+                    total = BigDecimal.ZERO;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error menghitung total pengeluaran: " + e.getMessage());
+            return BigDecimal.ZERO;
+        }
+
+        return total;
     }
 }

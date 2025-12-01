@@ -31,10 +31,10 @@ public class PemasukanForm extends javax.swing.JFrame {
         initComponents();
         loadTableData();
     }
-    
+
     private void navigateTo(JFrame targetFrame) {
         targetFrame.setVisible(true);
-        this.dispose(); 
+        this.dispose();
     }
 
     /**
@@ -52,6 +52,7 @@ public class PemasukanForm extends javax.swing.JFrame {
         btnPemasukan = new javax.swing.JButton();
         btnPengeluaran = new javax.swing.JButton();
         btnLaporan = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
         Content = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -76,7 +77,7 @@ public class PemasukanForm extends javax.swing.JFrame {
         Sidebar.setForeground(new java.awt.Color(255, 255, 255));
         Sidebar.setPreferredSize(new java.awt.Dimension(225, 750));
 
-        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/AppsLogo.png"))); // NOI18N
+        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/assets/AppsLogo.png"))); // NOI18N
 
         btnBeranda.setText("Beranda");
         btnBeranda.setBorderPainted(false);
@@ -112,19 +113,31 @@ public class PemasukanForm extends javax.swing.JFrame {
             }
         });
 
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/assets/log-out.png"))); // NOI18N
+        btnLogout.setText("Log Out");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
         Sidebar.setLayout(SidebarLayout);
         SidebarLayout.setHorizontalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBeranda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPengeluaran, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLaporan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
             .addComponent(btnPemasukan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLaporan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnPengeluaran, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnBeranda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(SidebarLayout.createSequentialGroup()
+                .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SidebarLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(Logo))
+                    .addGroup(SidebarLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +152,9 @@ public class PemasukanForm extends javax.swing.JFrame {
                 .addComponent(btnPengeluaran, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         Content.setBackground(new java.awt.Color(255, 255, 255));
@@ -244,6 +259,12 @@ public class PemasukanForm extends javax.swing.JFrame {
 
     private void btnBerandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBerandaActionPerformed
         // TODO add your handling code here:
+        try {
+            BerandaView beranda = new BerandaView();
+            navigateTo(beranda);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnBerandaActionPerformed
 
     private void btnPemasukanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPemasukanActionPerformed
@@ -320,6 +341,16 @@ public class PemasukanForm extends javax.swing.JFrame {
         clearInput();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        try {
+            LoginForm login = new LoginForm();
+            navigateTo(login);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -377,12 +408,8 @@ public class PemasukanForm extends javax.swing.JFrame {
 
         TabelPemasukan.setModel(model);
 
-        if (TabelPemasukan.getColumnModel().getColumnCount() > 1) {
-            TabelPemasukan.getColumnModel().getColumn(0).setMaxWidth(40);
-            TabelPemasukan.getColumnModel().removeColumn(
-                    TabelPemasukan.getColumnModel().getColumn(1) // Ambil objek kolom pada indeks 1
-            );
-        }
+        TabelPemasukan.getColumnModel().getColumn(0).setMaxWidth(40);
+        TabelPemasukan.getColumnModel().getColumn(1).setMaxWidth(40);
     }
 
     private void clearInput() {
@@ -435,7 +462,7 @@ public class PemasukanForm extends javax.swing.JFrame {
         pemasukanBaru.setNominalMasuk(nominalMasuk);
         pemasukanBaru.setKeterangan(keterangan);
 
-        boolean sukses;
+        boolean sukses = true;
 
         if (selectedId != -1) {
             pemasukanBaru.setId(selectedId);
@@ -444,15 +471,16 @@ public class PemasukanForm extends javax.swing.JFrame {
             sukses = pemasukanDAO.create(pemasukanBaru);
         }
 
-        if (sukses) {
-            String pesan = (selectedId != -1) ? "Data berhasil diperbarui." : "Data pemasukan berhasil disimpan.";
-            JOptionPane.showMessageDialog(this, pesan, "Sukses", JOptionPane.INFORMATION_MESSAGE);
-
-            clearInput();
-            loadTableData();
-        } else {
+        if (!sukses) {
             JOptionPane.showMessageDialog(this, "Operasi database gagal. Cek log error.", "Gagal", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        String pesan = (selectedId != -1) ? "Data berhasil diperbarui." : "Data pemasukan berhasil disimpan.";
+        JOptionPane.showMessageDialog(this, pesan, "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+        clearInput();
+        loadTableData();
     }
 
     private void deletePemasukan() {
@@ -493,6 +521,7 @@ public class PemasukanForm extends javax.swing.JFrame {
     private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnLaporan;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPemasukan;
     private javax.swing.JButton btnPengeluaran;
     private javax.swing.JButton btnSimpan;

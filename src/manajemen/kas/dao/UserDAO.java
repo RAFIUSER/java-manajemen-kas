@@ -23,7 +23,7 @@ public class UserDAO {
         User user = null; 
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+           PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
             stmt.setString(2, password); 
@@ -111,7 +111,7 @@ public class UserDAO {
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getNamaLengkap());
             stmt.setString(4, user.getEmail());
-            stmt.setInt(5, user.getId()); // WHERE ID
+            stmt.setInt(5, user.getId());
 
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;

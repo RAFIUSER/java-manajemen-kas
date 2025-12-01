@@ -75,7 +75,7 @@ public class LoginForm extends javax.swing.JFrame {
         });
         getContentPane().add(inputPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, 400, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/LoginBg.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/assets/LoginBg.png"))); // NOI18N
         jLabel1.setText("Test");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 775, -1));
 
@@ -125,16 +125,10 @@ public class LoginForm extends javax.swing.JFrame {
                 "Sukses",
                 JOptionPane.INFORMATION_MESSAGE
         );
-        
-        PemasukanForm pemasukanForm = new PemasukanForm();
-        pemasukanForm.setVisible(true);
+
+        BerandaView beranda = new BerandaView();
+        beranda.setVisible(true);
         this.dispose();
-        // 2b. Lanjutkan ke halaman utama (Contoh: Menutup LoginForm dan Membuka MainMenu)
-        // Contoh membuka Main Menu (asumsi Anda punya kelas MainMenu)
-        // MainMenu mainMenu = new MainMenu(user); 
-        // mainMenu.setVisible(true);
-        // this.dispose(); // Tutup jendela login saat ini
-        // Karena kelas MainMenu belum ada, kita hanya tampilkan pesan sukses.
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
