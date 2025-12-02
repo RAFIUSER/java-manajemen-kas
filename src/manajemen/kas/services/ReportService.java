@@ -9,6 +9,7 @@ import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.layout.properties.UnitValue;
 
 import manajemen.kas.dao.PemasukanDAO;
 import manajemen.kas.dao.PengeluaranDAO;
@@ -36,10 +37,6 @@ public class ReportService {
     private final PemasukanDAO pemasukanDAO = new PemasukanDAO();
     private final PengeluaranDAO pengeluaranDAO = new PengeluaranDAO();
 
-    /**
-     * Mengubah nilai BigDecimal menjadi format Rupiah Indonesia (Rp
-     * 1.000.000,00).
-     */
     private String formatRupiah(BigDecimal nominal) {
         if (nominal == null) {
             return "Rp 0,00";
@@ -59,8 +56,9 @@ public class ReportService {
     /**
      * Membuat Laporan Keuangan dalam format PDF.
      *
-     * * @param startDate Tanggal mulai laporan.
+     * @param startDate Tanggal mulai laporan.
      * @param endDate Tanggal akhir laporan.
+     * @param saldoBersih Saldo Akhir
      * @param filePath Lokasi file output PDF.
      * @return true jika PDF berhasil dibuat, false jika gagal.
      */
@@ -70,54 +68,38 @@ public class ReportService {
             BigDecimal saldoBersih,
             String filePath) {
 
-        // Deklarasi Font
         PdfFont boldFont = null;
 
         try {
-            // --- 1. MEMUAT FONT ---
             boldFont = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
             PdfFont regularFont = PdfFontFactory.createFont(StandardFonts.HELVETICA); // Tambahkan font reguler
 
-            // Ambil Detail Transaksi
             List<Pemasukan> detailPemasukan = pemasukanDAO.getDetailPemasukanByDate(startDate, endDate);
             List<Pengeluaran> detailPengeluaran = pengeluaranDAO.getDetailPengeluaranByDate(startDate, endDate);
 
-            // --- 3. INISIALISASI PDF ---
             PdfWriter writer = new PdfWriter(new FileOutputStream(filePath));
             PdfDocument pdf = new PdfDocument(writer);
-            // Margin 40 di semua sisi
+
             Document document = new Document(pdf);
 
-            // 4. Judul dan Periode
             document.add(new Paragraph("Laporan Keuangan Kas").setFont(boldFont).setFontSize(16).setTextAlignment(TextAlignment.CENTER));
             document.add(new Paragraph("Periode: " + startDate.toString() + " s/d " + endDate.toString()).setTextAlignment(TextAlignment.CENTER));
             document.add(new Paragraph("\n"));
 
-            // 5. Ringkasan Saldo
-            document.add(new Paragraph("Saldo Bersih Akhir: " + formatRupiah(saldoBersih))
-                    .setFont(boldFont).setFontSize(14).setTextAlignment(TextAlignment.RIGHT));
-            document.add(new Paragraph("\n"));
+            document.add(new Paragraph("Rincian Pemasukan:").setFont(boldFont));
 
-            // 6. Detail Pemasukan
-            document.add(new Paragraph("Detail Pemasukan:").setFont(boldFont));
+            float[] columnWidths = {10, 20, 20, 20, 30};
+            Table tablePemasukan = new Table(UnitValue.createPercentArray(columnWidths));
+            tablePemasukan.addHeaderCell(new Paragraph("No.").setFont(boldFont).setTextAlignment(TextAlignment.CENTER));
+            tablePemasukan.addHeaderCell(new Paragraph("Tanggal").setFont(boldFont).setTextAlignment(TextAlignment.CENTER));
+            tablePemasukan.addHeaderCell(new Paragraph("Nama Transaksi").setFont(boldFont).setTextAlignment(TextAlignment.CENTER));
+            tablePemasukan.addHeaderCell(new Paragraph("Nominal").setFont(boldFont).setTextAlignment(TextAlignment.CENTER));
+            tablePemasukan.addHeaderCell(new Paragraph("Keterangan").setFont(boldFont).setTextAlignment(TextAlignment.CENTER));
 
-            float[] columnWidths = {1, 3, 3, 4, 5};
-            Table tablePemasukan = new Table(columnWidths);
-
-            // Header Tabel Pemasukan
-            tablePemasukan.addHeaderCell(new Paragraph("No.").setFont(boldFont));
-            tablePemasukan.addHeaderCell(new Paragraph("Tanggal").setFont(boldFont));
-            tablePemasukan.addHeaderCell(new Paragraph("Nama Transaksi").setFont(boldFont));
-            tablePemasukan.addHeaderCell(new Paragraph("Nominal").setFont(boldFont).setTextAlignment(TextAlignment.RIGHT));
-            tablePemasukan.addHeaderCell(new Paragraph("Keterangan").setFont(boldFont));
-
-            // Isi Tabel Pemasukan
             int no = 1;
             for (Pemasukan p : detailPemasukan) {
-                // Perbaikan: Bungkus String/Objek dengan Paragraph sebelum menerapkan style
-
                 // Kolom No.
-                tablePemasukan.addCell(new Paragraph(String.valueOf(no++)).setFont(regularFont));
+                tablePemasukan.addCell(new Paragraph(String.valueOf(no++)).setFont(regularFont).setTextAlignment(TextAlignment.CENTER));
                 // Kolom Tanggal
                 tablePemasukan.addCell(new Paragraph(p.getTanggal().toString()).setFont(regularFont));
                 // Kolom Nama Transaksi
@@ -128,27 +110,21 @@ public class ReportService {
                 tablePemasukan.addCell(new Paragraph(p.getKeterangan()).setFont(regularFont));
             }
             document.add(tablePemasukan);
+            document.add(new Paragraph("\n"));
 
-            // 7. Detail Pengeluaran
-            document.add(new Paragraph("\n\n")); // Jeda dua baris
-            document.add(new Paragraph("Detail Pengeluaran:").setFont(boldFont));
+            document.add(new Paragraph("Rincian Pengeluaran:").setFont(boldFont));
 
-            Table tablePengeluaran = new Table(columnWidths);
-
-            // Header Tabel Pengeluaran (Sama dengan Pemasukan)
-            tablePengeluaran.addHeaderCell(new Paragraph("No.").setFont(boldFont));
-            tablePengeluaran.addHeaderCell(new Paragraph("Tanggal").setFont(boldFont));
-            tablePengeluaran.addHeaderCell(new Paragraph("Nama Transaksi").setFont(boldFont));
+            Table tablePengeluaran = new Table(UnitValue.createPercentArray(columnWidths));
+            tablePengeluaran.addHeaderCell(new Paragraph("No.").setFont(boldFont).setTextAlignment(TextAlignment.CENTER));
+            tablePengeluaran.addHeaderCell(new Paragraph("Tanggal").setFont(boldFont).setTextAlignment(TextAlignment.CENTER));
+            tablePengeluaran.addHeaderCell(new Paragraph("Nama Transaksi").setFont(boldFont).setTextAlignment(TextAlignment.CENTER));
             tablePengeluaran.addHeaderCell(new Paragraph("Nominal").setFont(boldFont).setTextAlignment(TextAlignment.RIGHT));
-            tablePengeluaran.addHeaderCell(new Paragraph("Keterangan").setFont(boldFont));
+            tablePengeluaran.addHeaderCell(new Paragraph("Keterangan").setFont(boldFont).setTextAlignment(TextAlignment.CENTER));
 
-            // Isi Tabel Pengeluaran
             int noPengeluaran = 1;
             for (Pengeluaran p : detailPengeluaran) {
-                // Perbaikan: Bungkus String/Objek dengan Paragraph sebelum menerapkan style
-
                 // Kolom No.
-                tablePengeluaran.addCell(new Paragraph(String.valueOf(noPengeluaran++)).setFont(regularFont));
+                tablePengeluaran.addCell(new Paragraph(String.valueOf(noPengeluaran++)).setFont(regularFont).setTextAlignment(TextAlignment.CENTER));
                 // Kolom Tanggal
                 tablePengeluaran.addCell(new Paragraph(p.getTanggal().toString()).setFont(regularFont));
                 // Kolom Nama Transaksi
@@ -159,8 +135,11 @@ public class ReportService {
                 tablePengeluaran.addCell(new Paragraph(p.getKeterangan()).setFont(regularFont));
             }
             document.add(tablePengeluaran);
+            document.add(new Paragraph("\n\n"));
 
-            // 8. Tutup Dokumen
+            document.add(new Paragraph("Saldo Bersih Akhir: " + formatRupiah(saldoBersih))
+                    .setFont(boldFont).setFontSize(14).setTextAlignment(TextAlignment.RIGHT));
+
             document.close();
 
             return true;
