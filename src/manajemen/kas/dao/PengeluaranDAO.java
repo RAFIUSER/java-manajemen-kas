@@ -85,7 +85,6 @@ public class PengeluaranDAO {
 
         } catch (SQLException e) {
             System.err.println("Error updating pengeluaran: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
@@ -105,7 +104,6 @@ public class PengeluaranDAO {
 
         } catch (SQLException e) {
             System.err.println("Error deleting pengeluaran: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }

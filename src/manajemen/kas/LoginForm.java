@@ -4,6 +4,7 @@ import manajemen.kas.dao.UserDAO;
 import manajemen.kas.model.User;
 import javax.swing.JOptionPane;
 import com.formdev.flatlaf.FlatLightLaf;
+import manajemen.kas.services.SessionManager;
 
 /**
  *
@@ -105,30 +106,8 @@ public class LoginForm extends javax.swing.JFrame {
             );
             return;
         }
-
-        User user = userDAO.authenticateUser(usernameInput, passwordInput);
-
-        if (user == null) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Username atau Password salah. Silakan coba lagi.",
-                    "Login Gagal",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
-            inputPassword.setText("");
-        }
-
-        JOptionPane.showMessageDialog(
-                this,
-                "Login Berhasil! Selamat datang, " + user.getNamaLengkap(),
-                "Sukses",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-
-        BerandaView beranda = new BerandaView();
-        beranda.setVisible(true);
-        this.dispose();
+        
+        handleLogin(usernameInput, passwordInput);
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
@@ -143,6 +122,21 @@ public class LoginForm extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new LoginForm().setVisible(true));
+    }
+
+    public void handleLogin(String usernameInput, String passwordInput) {
+        User loggedInUser = userDAO.authenticateUser(usernameInput, passwordInput);
+
+        if (loggedInUser == null) {
+            JOptionPane.showMessageDialog(null, "Username atau Password salah.", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+        }
+
+        SessionManager.getInstance().setLoggedInUser(loggedInUser);
+        JOptionPane.showMessageDialog(null, "Login Berhasil! Selamat datang, " + loggedInUser.getNamaLengkap());
+        
+        BerandaView beranda = new BerandaView();
+        beranda.setVisible(true);
+        this.dispose();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

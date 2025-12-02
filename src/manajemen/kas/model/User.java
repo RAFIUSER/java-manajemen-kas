@@ -9,7 +9,7 @@ public class User {
     private String username;
     private String password;
     private String namaLengkap;
-    private String email;
+    private String jabatan;
 
     public Integer getId() {
         return id;
@@ -43,14 +43,14 @@ public class User {
         this.namaLengkap = namaLengkap;
     }
 
-    public String getEmail() {
-        return email;
+    public String getJabatan() {
+        return jabatan;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setJabatan(String jabatan) {
+        this.jabatan = jabatan;
     }
-
+    
     public User() {
     }
 
@@ -59,7 +59,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.namaLengkap = namaLengkap;
-        this.email = email;
+        this.jabatan = jabatan;
     }
     
 }

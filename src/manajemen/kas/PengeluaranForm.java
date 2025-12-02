@@ -57,6 +57,7 @@ public class PengeluaranForm extends javax.swing.JFrame {
         btnPengeluaran = new javax.swing.JButton();
         btnLaporan = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
+        btnAkun = new javax.swing.JButton();
         Content = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -125,6 +126,14 @@ public class PengeluaranForm extends javax.swing.JFrame {
             }
         });
 
+        btnAkun.setText("Akun");
+        btnAkun.setBorderPainted(false);
+        btnAkun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAkunActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
         Sidebar.setLayout(SidebarLayout);
         SidebarLayout.setHorizontalGroup(
@@ -142,6 +151,7 @@ public class PengeluaranForm extends javax.swing.JFrame {
                         .addGap(48, 48, 48)
                         .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(29, Short.MAX_VALUE))
+            .addComponent(btnAkun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,6 +166,8 @@ public class PengeluaranForm extends javax.swing.JFrame {
                 .addComponent(btnPengeluaran, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
@@ -317,6 +329,16 @@ public class PengeluaranForm extends javax.swing.JFrame {
             System.err.println("Gagal membuka Form: " + e.getMessage());
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAkunActionPerformed
+        // TODO add your handling code here:
+        try {
+            AkunForm akun = new AkunForm();
+            navigateTo(akun);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form:" + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAkunActionPerformed
 
     /**
      * @param args the command line arguments
@@ -483,6 +505,7 @@ public class PengeluaranForm extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Sidebar;
     private javax.swing.JTable TabelPengeluaran;
+    private javax.swing.JButton btnAkun;
     private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnHapus;

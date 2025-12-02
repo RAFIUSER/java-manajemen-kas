@@ -53,6 +53,7 @@ public class PemasukanForm extends javax.swing.JFrame {
         btnPengeluaran = new javax.swing.JButton();
         btnLaporan = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
+        btnAkun = new javax.swing.JButton();
         Content = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -121,6 +122,14 @@ public class PemasukanForm extends javax.swing.JFrame {
             }
         });
 
+        btnAkun.setText("Akun");
+        btnAkun.setBorderPainted(false);
+        btnAkun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAkunActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
         Sidebar.setLayout(SidebarLayout);
         SidebarLayout.setHorizontalGroup(
@@ -138,6 +147,7 @@ public class PemasukanForm extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(29, Short.MAX_VALUE))
+            .addComponent(btnAkun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,6 +162,8 @@ public class PemasukanForm extends javax.swing.JFrame {
                 .addComponent(btnPengeluaran, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
@@ -309,26 +321,20 @@ public class PemasukanForm extends javax.swing.JFrame {
         }
 
         try {
-            // Ambil ID (Indeks 1) dan simpan ke variabel status
             selectedId = (int) TabelPemasukan.getModel().getValueAt(selectedRow, 1);
 
-            // Ambil dan set Nama Transaksi
             String namaTransaksi = (String) TabelPemasukan.getModel().getValueAt(selectedRow, 2);
             inputNamaTransaksi.setText(namaTransaksi);
 
-            // Ambil dan set Tanggal
             LocalDate tanggal = (LocalDate) TabelPemasukan.getModel().getValueAt(selectedRow, 3);
-            inputTanggal.setDate(java.sql.Date.valueOf(tanggal)); // Asumsi inputTanggal menggunakan JDateChooser atau sejenisnya
+            inputTanggal.setDate(java.sql.Date.valueOf(tanggal));
 
-            // Ambil dan set Nominal (Masih berupa String berformat titik!)
             String nominalFormatted = (String) TabelPemasukan.getModel().getValueAt(selectedRow, 4);
             inputNominalMasuk.setText(nominalFormatted);
 
-            // Ambil dan set Keterangan
             String keterangan = (String) TabelPemasukan.getModel().getValueAt(selectedRow, 5);
             inputKeterangan.setText(keterangan);
 
-            // Opsional: Ganti teks tombol Simpan menjadi Update
             btnSimpan.setText("Update");
 
         } catch (Exception e) {
@@ -350,6 +356,16 @@ public class PemasukanForm extends javax.swing.JFrame {
             System.err.println("Gagal membuka Form: " + e.getMessage());
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAkunActionPerformed
+        // TODO add your handling code here:
+        try {
+            AkunForm akun = new AkunForm();
+            navigateTo(akun);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form:" + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAkunActionPerformed
 
     /**
      * @param args the command line arguments
@@ -518,6 +534,7 @@ public class PemasukanForm extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Sidebar;
     private javax.swing.JTable TabelPemasukan;
+    private javax.swing.JButton btnAkun;
     private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnLaporan;

@@ -7,7 +7,8 @@ import manajemen.kas.dao.PengeluaranDAO;
 import manajemen.kas.dao.PemasukanDAO;
 
 import javax.swing.JFrame;
-//import manajemen.kas.model.User;
+import manajemen.kas.model.User;
+import manajemen.kas.services.SessionManager;
 
 /**
  *
@@ -29,6 +30,10 @@ public class BerandaView extends javax.swing.JFrame {
     }
     
     private void initDashboardData() {
+        User user = SessionManager.getInstance().getLoggedInUser();
+        
+        HeaderLabel.setText("Selamat Datang, " + user.getNamaLengkap() + "!");
+        
         BigDecimal totalPengeluaran = pengeluaranDAO.getTotalPengeluaran();
         BigDecimal totalPemasukan = pemasukanDAO.getTotalPemasukan();
         BigDecimal totalSaldo = totalPemasukan.subtract(totalPengeluaran);
@@ -42,8 +47,6 @@ public class BerandaView extends javax.swing.JFrame {
         totalPemasukanLabel.setText(formatter.format(totalPemasukan));
         
         totalSaldoLabel.setText(formatter.format(totalSaldo));
-        
-//        HeaderLabel.setText("selamat Datang, " + user.getNamaLengkap());
     }
 
     private void navigateTo(JFrame targetFrame) {
@@ -67,6 +70,7 @@ public class BerandaView extends javax.swing.JFrame {
         btnPengeluaran = new javax.swing.JButton();
         btnLaporan = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
+        btnAkun = new javax.swing.JButton();
         Content = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -137,6 +141,14 @@ public class BerandaView extends javax.swing.JFrame {
             }
         });
 
+        btnAkun.setText("Akun");
+        btnAkun.setBorderPainted(false);
+        btnAkun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAkunActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
         Sidebar.setLayout(SidebarLayout);
         SidebarLayout.setHorizontalGroup(
@@ -154,6 +166,7 @@ public class BerandaView extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(29, Short.MAX_VALUE))
+            .addComponent(btnAkun, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         SidebarLayout.setVerticalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,6 +181,8 @@ public class BerandaView extends javax.swing.JFrame {
                 .addComponent(btnPengeluaran, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
@@ -458,6 +473,16 @@ public class BerandaView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnQACetakActionPerformed
 
+    private void btnAkunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAkunActionPerformed
+        // TODO add your handling code here:
+        try {
+            AkunForm akun = new AkunForm();
+            navigateTo(akun);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form:" + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAkunActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -488,6 +513,7 @@ public class BerandaView extends javax.swing.JFrame {
     private javax.swing.JLabel HeaderLabel;
     private javax.swing.JLabel Logo;
     private javax.swing.JPanel Sidebar;
+    private javax.swing.JButton btnAkun;
     private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnLogout;
