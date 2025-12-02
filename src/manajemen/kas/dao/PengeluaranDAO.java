@@ -5,6 +5,7 @@ import manajemen.kas.model.Pengeluaran;
 import manajemen.kas.services.DBConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,5 +135,68 @@ public class PengeluaranDAO {
         }
 
         return total;
+    }
+
+    public BigDecimal getTotalPengeluaranByDate(LocalDate startDate, LocalDate endDate) {
+        String sql = "SELECT SUM(nominalKeluar) AS total FROM pengeluaran WHERE tanggal BETWEEN ? AND ?";
+        BigDecimal total = BigDecimal.ZERO;
+
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDate(1, Date.valueOf(startDate));
+            stmt.setDate(2, Date.valueOf(endDate));
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getBigDecimal("total");
+                    if (total == null) {
+                        total = BigDecimal.ZERO;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error menghitung total pengeluaran berdasarkan tanggal: " + e.getMessage());
+        }
+
+        return total;
+    }
+
+    /**
+     * Mengambil daftar (List) semua transaksi pengeluaran dalam rentang tanggal
+     * tertentu.
+     *
+     * @param startDate Tanggal awal filter (inclusive).
+     * @param endDate Tanggal akhir filter (inclusive).
+     * @return List<Pemasukan> daftar transaksi pengeluaran.
+     */
+    public List<Pengeluaran> getDetailPengeluaranByDate(LocalDate startDate, LocalDate endDate) {
+        List<Pengeluaran> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM pengeluaran WHERE tanggal BETWEEN ? AND ? ORDER BY tanggal ASC, id ASC";
+
+        try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDate(1, Date.valueOf(startDate));
+            stmt.setDate(2, Date.valueOf(endDate));
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Pengeluaran pengeluaran = new Pengeluaran();
+                    pengeluaran.setId(rs.getInt("id"));
+                    pengeluaran.setNamaTransaksi(rs.getString("namaTransaksi"));
+                    pengeluaran.setTanggal(rs.getDate("tanggal").toLocalDate());
+
+                    pengeluaran.setNominalKeluar(rs.getBigDecimal("nominalKeluar"));
+                    pengeluaran.setKeterangan(rs.getString("keterangan"));
+
+                    list.add(pengeluaran);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error mengambil detail pengeluaran berdasarkan tanggal: " + e.getMessage());
+        }
+
+        return list;
     }
 }

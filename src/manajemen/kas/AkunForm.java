@@ -63,6 +63,7 @@ public class AkunForm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         inputPassword = new javax.swing.JPasswordField();
         inputJabatan = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -82,7 +83,6 @@ public class AkunForm extends javax.swing.JFrame {
             }
         });
 
-        btnPemasukan.setBackground(new java.awt.Color(204, 204, 204));
         btnPemasukan.setText("Pemasukan");
         btnPemasukan.setBorderPainted(false);
         btnPemasukan.addActionListener(new java.awt.event.ActionListener() {
@@ -115,6 +115,7 @@ public class AkunForm extends javax.swing.JFrame {
             }
         });
 
+        btnAkun.setBackground(new java.awt.Color(204, 204, 204));
         btnAkun.setText("Akun");
         btnAkun.setBorderPainted(false);
         btnAkun.addActionListener(new java.awt.event.ActionListener() {
@@ -177,7 +178,7 @@ public class AkunForm extends javax.swing.JFrame {
         Content.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 100, -1));
 
         jLabel5.setText("Jabatan");
-        Content.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 100, -1));
+        Content.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 100, -1));
         Content.add(inputNamaLengkap, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 480, -1));
 
         inputUsername.addActionListener(new java.awt.event.ActionListener() {
@@ -250,7 +251,11 @@ public class AkunForm extends javax.swing.JFrame {
                 inputJabatanActionPerformed(evt);
             }
         });
-        Content.add(inputJabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 480, -1));
+        Content.add(inputJabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 480, -1));
+
+        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel6.setText("*Kosongkan password jika tidak ingin mengubah");
+        Content.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 260, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -303,6 +308,12 @@ public class AkunForm extends javax.swing.JFrame {
 
     private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
         // TODO add your handling code here:
+        try {
+            LaporanView laporan = new LaporanView();
+            navigateTo(laporan);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnLaporanActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
@@ -552,6 +563,7 @@ public class AkunForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }

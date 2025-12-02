@@ -301,6 +301,12 @@ public class PemasukanForm extends javax.swing.JFrame {
 
     private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
         // TODO add your handling code here:
+        try {
+            LaporanView laporan = new LaporanView();
+            navigateTo(laporan);
+        } catch (Exception e) {
+            System.err.println("Gagal membuka Form: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnLaporanActionPerformed
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
