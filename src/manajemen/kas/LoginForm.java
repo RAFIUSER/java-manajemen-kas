@@ -57,8 +57,8 @@ public class LoginForm extends javax.swing.JFrame {
         loginBtn.setBackground(new java.awt.Color(59, 130, 246));
         loginBtn.setForeground(new java.awt.Color(255, 255, 255));
         loginBtn.setText("Log In");
-        loginBtn.setBorder(null);
-        loginBtn.setBorderPainted(false);
+        loginBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        loginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBtnActionPerformed(evt);

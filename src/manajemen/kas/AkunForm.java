@@ -45,7 +45,6 @@ public class AkunForm extends javax.swing.JFrame {
         btnBeranda = new javax.swing.JButton();
         btnPemasukan = new javax.swing.JButton();
         btnPengeluaran = new javax.swing.JButton();
-        btnLaporan = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         btnAkun = new javax.swing.JButton();
         Content = new javax.swing.JPanel();
@@ -75,8 +74,9 @@ public class AkunForm extends javax.swing.JFrame {
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/assets/AppsLogo.png"))); // NOI18N
 
         btnBeranda.setText("Beranda");
+        btnBeranda.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBeranda.setBorderPainted(false);
-        btnBeranda.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnBeranda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBeranda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBerandaActionPerformed(evt);
@@ -84,7 +84,9 @@ public class AkunForm extends javax.swing.JFrame {
         });
 
         btnPemasukan.setText("Pemasukan");
+        btnPemasukan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnPemasukan.setBorderPainted(false);
+        btnPemasukan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPemasukan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPemasukanActionPerformed(evt);
@@ -92,18 +94,12 @@ public class AkunForm extends javax.swing.JFrame {
         });
 
         btnPengeluaran.setText("Pengeluaran");
+        btnPengeluaran.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnPengeluaran.setBorderPainted(false);
+        btnPengeluaran.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPengeluaran.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPengeluaranActionPerformed(evt);
-            }
-        });
-
-        btnLaporan.setText("Laporan");
-        btnLaporan.setBorderPainted(false);
-        btnLaporan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLaporanActionPerformed(evt);
             }
         });
 
@@ -117,7 +113,9 @@ public class AkunForm extends javax.swing.JFrame {
 
         btnAkun.setBackground(new java.awt.Color(204, 204, 204));
         btnAkun.setText("Akun");
+        btnAkun.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnAkun.setBorderPainted(false);
+        btnAkun.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAkun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAkunActionPerformed(evt);
@@ -129,7 +127,6 @@ public class AkunForm extends javax.swing.JFrame {
         SidebarLayout.setHorizontalGroup(
             SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnPemasukan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnLaporan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnPengeluaran, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnBeranda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(SidebarLayout.createSequentialGroup()
@@ -154,8 +151,6 @@ public class AkunForm extends javax.swing.JFrame {
                 .addComponent(btnPemasukan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnPengeluaran, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,6 +184,7 @@ public class AkunForm extends javax.swing.JFrame {
         Content.add(inputUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 480, 23));
 
         btnSimpan.setText("Simpan");
+        btnSimpan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSimpanActionPerformed(evt);
@@ -197,6 +193,7 @@ public class AkunForm extends javax.swing.JFrame {
         Content.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
 
         btnHapus.setText("Hapus");
+        btnHapus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHapusActionPerformed(evt);
@@ -225,6 +222,7 @@ public class AkunForm extends javax.swing.JFrame {
             }
         });
         TabelAkun.setColumnSelectionAllowed(true);
+        TabelAkun.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         TabelAkun.getTableHeader().setReorderingAllowed(false);
         TabelAkun.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -237,6 +235,7 @@ public class AkunForm extends javax.swing.JFrame {
         Content.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 710, 480));
 
         jButton1.setText("Clear");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -305,16 +304,6 @@ public class AkunForm extends javax.swing.JFrame {
             System.err.println("Gagal membuka Form: " + e.getMessage());
         }
     }//GEN-LAST:event_btnPengeluaranActionPerformed
-
-    private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
-        // TODO add your handling code here:
-        try {
-            LaporanView laporan = new LaporanView();
-            navigateTo(laporan);
-        } catch (Exception e) {
-            System.err.println("Gagal membuka Form: " + e.getMessage());
-        }
-    }//GEN-LAST:event_btnLaporanActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
@@ -548,7 +537,6 @@ public class AkunForm extends javax.swing.JFrame {
     private javax.swing.JButton btnAkun;
     private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnHapus;
-    private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPemasukan;
     private javax.swing.JButton btnPengeluaran;
