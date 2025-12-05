@@ -169,29 +169,36 @@ public class PengeluaranForm extends javax.swing.JFrame {
         );
 
         Content.setBackground(new java.awt.Color(255, 255, 255));
-        Content.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Content.setLayout(null);
 
         jLabel2.setText("Nama Transaksi");
-        Content.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 110, 20));
+        Content.add(jLabel2);
+        jLabel2.setBounds(30, 70, 110, 20);
 
         jLabel3.setText("Tanggal");
         jLabel3.setPreferredSize(new java.awt.Dimension(45, 20));
-        Content.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 100, -1));
+        Content.add(jLabel3);
+        jLabel3.setBounds(30, 100, 100, 20);
 
         jLabel4.setText("Nominal Keluar");
         jLabel4.setPreferredSize(new java.awt.Dimension(74, 23));
-        Content.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 100, -1));
+        Content.add(jLabel4);
+        jLabel4.setBounds(30, 130, 100, 23);
 
         jLabel5.setText("Keterangan");
-        Content.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 100, -1));
-        Content.add(inputNamaTransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 480, -1));
-        Content.add(inputNominalKeluar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 480, 23));
+        Content.add(jLabel5);
+        jLabel5.setBounds(30, 160, 100, 16);
+        Content.add(inputNamaTransaksi);
+        inputNamaTransaksi.setBounds(150, 70, 480, 22);
+        Content.add(inputNominalKeluar);
+        inputNominalKeluar.setBounds(150, 130, 480, 23);
 
         inputKeterangan.setColumns(20);
         inputKeterangan.setRows(5);
         jScrollPane1.setViewportView(inputKeterangan);
 
-        Content.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 480, 66));
+        Content.add(jScrollPane1);
+        jScrollPane1.setBounds(150, 160, 480, 66);
 
         btnSimpan.setText("Simpan");
         btnSimpan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -200,7 +207,8 @@ public class PengeluaranForm extends javax.swing.JFrame {
                 btnSimpanActionPerformed(evt);
             }
         });
-        Content.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
+        Content.add(btnSimpan);
+        btnSimpan.setBounds(650, 70, 90, 40);
 
         btnClear.setText("Clear");
         btnClear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -209,7 +217,8 @@ public class PengeluaranForm extends javax.swing.JFrame {
                 btnClearActionPerformed(evt);
             }
         });
-        Content.add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 90, 40));
+        Content.add(btnClear);
+        btnClear.setBounds(650, 170, 90, 40);
 
         btnHapus.setText("Hapus");
         btnHapus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -218,7 +227,8 @@ public class PengeluaranForm extends javax.swing.JFrame {
                 btnHapusActionPerformed(evt);
             }
         });
-        Content.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 90, 40));
+        Content.add(btnHapus);
+        btnHapus.setBounds(650, 120, 90, 40);
 
         TabelPengeluaran.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -239,17 +249,26 @@ public class PengeluaranForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        TabelPengeluaran.setColumnSelectionAllowed(true);
+        TabelPengeluaran.setCellSelectionEnabled(false);
         TabelPengeluaran.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TabelPengeluaran.setRowSelectionAllowed(true);
+        TabelPengeluaran.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelPengeluaranMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(TabelPengeluaran);
         TabelPengeluaran.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        Content.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 710, 480));
+        Content.add(jScrollPane2);
+        jScrollPane2.setBounds(30, 250, 710, 480);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Pencatatan Pengeluaran");
-        Content.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 388, -1));
-        Content.add(inputTanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 480, -1));
+        Content.add(jLabel1);
+        jLabel1.setBounds(20, 20, 388, 32);
+        Content.add(inputTanggal);
+        inputTanggal.setBounds(150, 100, 480, 22);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -335,6 +354,35 @@ public class PengeluaranForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAkunActionPerformed
 
+    private void TabelPengeluaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelPengeluaranMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = TabelPengeluaran.getSelectedRow();
+        if (selectedRow == -1) {
+            return;
+        }
+
+        try {
+            selectedId = (int) TabelPengeluaran.getModel().getValueAt(selectedRow, 1);
+
+            String namaTransaksi = (String) TabelPengeluaran.getModel().getValueAt(selectedRow, 2);
+            inputNamaTransaksi.setText(namaTransaksi);
+
+            LocalDate tanggal = (LocalDate) TabelPengeluaran.getModel().getValueAt(selectedRow, 3);
+            inputTanggal.setDate(java.sql.Date.valueOf(tanggal));
+
+            String nominalFormatted = (String) TabelPengeluaran.getModel().getValueAt(selectedRow, 4);
+            inputNominalKeluar.setText(nominalFormatted);
+
+            String keterangan = (String) TabelPengeluaran.getModel().getValueAt(selectedRow, 5);
+            inputKeterangan.setText(keterangan);
+
+            btnSimpan.setText("Update");
+
+        } catch (Exception e) {
+            System.err.println("Error saat mengambil data dari tabel: " + e.getMessage());
+        }
+    }//GEN-LAST:event_TabelPengeluaranMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -398,7 +446,7 @@ public class PengeluaranForm extends javax.swing.JFrame {
 
     private void clearInput() {
         inputNamaTransaksi.setText("");
-        inputTanggal.setDate(new Date());
+        inputTanggal.setDate(null);
         inputNominalKeluar.setText("");
         inputKeterangan.setText("");
 
@@ -489,6 +537,7 @@ public class PengeluaranForm extends javax.swing.JFrame {
             if (sukses) {
                 JOptionPane.showMessageDialog(this, "Data berhasil dihapus.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                 loadTableData();
+                clearInput();
             } else {
                 JOptionPane.showMessageDialog(this, "Gagal menghapus data di database.", "Error", JOptionPane.ERROR_MESSAGE);
             }

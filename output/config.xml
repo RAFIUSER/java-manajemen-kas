@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>E:\_java\manajemen-kas\dist\manajemen-kas.jar</jar>
+  <outfile>E:\_java\manajemen-kas\output\manajemen-kas.exe</outfile>
+  <errTitle>Download and install the required Java version.</errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>https://www.oracle.com/asean/java/technologies/javase/jdk24-archive-downloads.html</downloadUrl>
+  <supportUrl>https://github.com/RAFIUSER/java-manajemen-kas</supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>E:\_java\manajemen-kas\src\manajemen\kas\assets\app.ico</icon>
+  <jre>
+    <path>C:\Program Files\Java\jdk-24</path>
+    <requiresJdk>false</requiresJdk>
+    <requires64Bit>false</requires64Bit>
+    <minVersion>24</minVersion>
+    <maxVersion></maxVersion>
+  </jre>
+</launch4jConfig>

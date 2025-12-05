@@ -158,29 +158,35 @@ public class AkunForm extends javax.swing.JFrame {
         );
 
         Content.setBackground(new java.awt.Color(255, 255, 255));
-        Content.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Content.setLayout(null);
 
         jLabel2.setText("Nama Lengkap");
-        Content.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 110, 20));
+        Content.add(jLabel2);
+        jLabel2.setBounds(30, 70, 110, 20);
 
         jLabel3.setText("Username");
         jLabel3.setPreferredSize(new java.awt.Dimension(45, 20));
-        Content.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 100, -1));
+        Content.add(jLabel3);
+        jLabel3.setBounds(30, 100, 100, 20);
 
         jLabel4.setText("Password");
         jLabel4.setPreferredSize(new java.awt.Dimension(74, 23));
-        Content.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 100, -1));
+        Content.add(jLabel4);
+        jLabel4.setBounds(30, 130, 100, 23);
 
         jLabel5.setText("Jabatan");
-        Content.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 100, -1));
-        Content.add(inputNamaLengkap, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 480, -1));
+        Content.add(jLabel5);
+        jLabel5.setBounds(30, 180, 100, 16);
+        Content.add(inputNamaLengkap);
+        inputNamaLengkap.setBounds(150, 70, 480, 22);
 
         inputUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputUsernameActionPerformed(evt);
             }
         });
-        Content.add(inputUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 480, 23));
+        Content.add(inputUsername);
+        inputUsername.setBounds(150, 100, 480, 23);
 
         btnSimpan.setText("Simpan");
         btnSimpan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -189,7 +195,8 @@ public class AkunForm extends javax.swing.JFrame {
                 btnSimpanActionPerformed(evt);
             }
         });
-        Content.add(btnSimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 90, 40));
+        Content.add(btnSimpan);
+        btnSimpan.setBounds(650, 70, 90, 40);
 
         btnHapus.setText("Hapus");
         btnHapus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -198,11 +205,13 @@ public class AkunForm extends javax.swing.JFrame {
                 btnHapusActionPerformed(evt);
             }
         });
-        Content.add(btnHapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 90, 40));
+        Content.add(btnHapus);
+        btnHapus.setBounds(650, 120, 90, 40);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Manajemen Akun");
-        Content.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 388, -1));
+        Content.add(jLabel1);
+        jLabel1.setBounds(20, 20, 388, 32);
 
         TabelAkun.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -220,8 +229,9 @@ public class AkunForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        TabelAkun.setColumnSelectionAllowed(true);
+        TabelAkun.setCellSelectionEnabled(false);
         TabelAkun.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TabelAkun.setRowSelectionAllowed(true);
         TabelAkun.getTableHeader().setReorderingAllowed(false);
         TabelAkun.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -231,7 +241,8 @@ public class AkunForm extends javax.swing.JFrame {
         jScrollPane3.setViewportView(TabelAkun);
         TabelAkun.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        Content.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 710, 480));
+        Content.add(jScrollPane3);
+        jScrollPane3.setBounds(30, 250, 710, 480);
 
         jButton1.setText("Clear");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -240,8 +251,10 @@ public class AkunForm extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        Content.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, 90, 40));
-        Content.add(inputPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 480, -1));
+        Content.add(jButton1);
+        jButton1.setBounds(650, 170, 90, 40);
+        Content.add(inputPassword);
+        inputPassword.setBounds(150, 130, 480, 22);
 
         inputJabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Jabatan", "Ketua Kelas", "Bendahara" }));
         inputJabatan.addActionListener(new java.awt.event.ActionListener() {
@@ -249,11 +262,13 @@ public class AkunForm extends javax.swing.JFrame {
                 inputJabatanActionPerformed(evt);
             }
         });
-        Content.add(inputJabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 480, -1));
+        Content.add(inputJabatan);
+        inputJabatan.setBounds(150, 180, 480, 22);
 
         jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         jLabel6.setText("*Kosongkan password jika tidak ingin mengubah");
-        Content.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 260, 30));
+        Content.add(jLabel6);
+        jLabel6.setBounds(150, 150, 260, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,7 +361,7 @@ public class AkunForm extends javax.swing.JFrame {
 
             btnSimpan.setText("Update");
 
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.err.println("Error saat mengambil data dari tabel: " + e.getMessage());
         }
     }//GEN-LAST:event_TabelAkunMouseClicked
@@ -420,13 +435,8 @@ public class AkunForm extends javax.swing.JFrame {
 
         TabelAkun.setModel(model);
 
-        if (TabelAkun.getColumnModel().getColumnCount() > 1) {
-            TabelAkun.getColumnModel().removeColumn(
-                    TabelAkun.getColumnModel().getColumn(1) // Ambil objek kolom pada indeks 1
-            );
-        }
-
         TabelAkun.getColumnModel().getColumn(0).setMaxWidth(40);
+        TabelAkun.getColumnModel().getColumn(1).setMaxWidth(40);
     }
 
     private void clearInput() {

@@ -41,18 +41,22 @@ public class LoginForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Aplikasi Manajemen Kas | Login");
+        setMinimumSize(new java.awt.Dimension(775, 600));
+        setPreferredSize(new java.awt.Dimension(775, 600));
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(null);
 
         jLabel3.setText("Username");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, -1, -1));
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(190, 260, 53, 16);
 
         inputUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputUsernameActionPerformed(evt);
             }
         });
-        getContentPane().add(inputUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 400, 30));
+        getContentPane().add(inputUsername);
+        inputUsername.setBounds(190, 280, 400, 30);
 
         loginBtn.setBackground(new java.awt.Color(59, 130, 246));
         loginBtn.setForeground(new java.awt.Color(255, 255, 255));
@@ -64,21 +68,25 @@ public class LoginForm extends javax.swing.JFrame {
                 loginBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 450, 400, 40));
+        getContentPane().add(loginBtn);
+        loginBtn.setBounds(190, 450, 400, 40);
 
         jLabel2.setText("Password");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, -1, -1));
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(190, 340, 50, 16);
 
         inputPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputPasswordActionPerformed(evt);
             }
         });
-        getContentPane().add(inputPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, 400, 30));
+        getContentPane().add(inputPassword);
+        inputPassword.setBounds(190, 360, 400, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manajemen/kas/assets/LoginBg.png"))); // NOI18N
         jLabel1.setText("Test");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 775, -1));
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 775, 600);
 
         pack();
         setLocationRelativeTo(null);
@@ -129,6 +137,7 @@ public class LoginForm extends javax.swing.JFrame {
 
         if (loggedInUser == null) {
             JOptionPane.showMessageDialog(null, "Username atau Password salah.", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         SessionManager.getInstance().setLoggedInUser(loggedInUser);
