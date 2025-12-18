@@ -58,16 +58,19 @@ public class ReportService {
      *
      * @param startDate Tanggal mulai laporan.
      * @param endDate Tanggal akhir laporan.
-     * @param saldoBersih Saldo Akhir
+     * @param totalPengeluaran Total Pemasukan
+     * @param totalPemasukan Total Pengeluaran
      * @param filePath Lokasi file output PDF.
      * @return true jika PDF berhasil dibuat, false jika gagal.
      */
     public boolean generatePdfReport(
             LocalDate startDate,
             LocalDate endDate,
-            BigDecimal saldoBersih,
-            String filePath) {
-
+            BigDecimal totalPengeluaran,
+            BigDecimal totalPemasukan,
+            String filePath
+    ) {
+        
         PdfFont boldFont = null;
 
         try {
@@ -110,6 +113,10 @@ public class ReportService {
                 tablePemasukan.addCell(new Paragraph(p.getKeterangan()).setFont(regularFont));
             }
             document.add(tablePemasukan);
+            
+            document.add(new Paragraph("Total Pemasukan: " + formatRupiah(totalPemasukan))
+                    .setFont(boldFont).setFontSize(14).setTextAlignment(TextAlignment.RIGHT));
+            
             document.add(new Paragraph("\n"));
 
             document.add(new Paragraph("Rincian Pengeluaran:").setFont(boldFont));
@@ -135,9 +142,8 @@ public class ReportService {
                 tablePengeluaran.addCell(new Paragraph(p.getKeterangan()).setFont(regularFont));
             }
             document.add(tablePengeluaran);
-            document.add(new Paragraph("\n\n"));
 
-            document.add(new Paragraph("Saldo Bersih Akhir: " + formatRupiah(saldoBersih))
+            document.add(new Paragraph("Total Pengeluaran: " + formatRupiah(totalPengeluaran))
                     .setFont(boldFont).setFontSize(14).setTextAlignment(TextAlignment.RIGHT));
 
             document.close();

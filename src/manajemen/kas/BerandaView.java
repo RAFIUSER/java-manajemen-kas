@@ -89,15 +89,16 @@ public class BerandaView extends javax.swing.JFrame {
         try {
             BigDecimal totalPemasukan = pemasukanDAO.getTotalPemasukanByDate(tanggalMulai, tanggalSelesai);
             BigDecimal totalPengeluaran = pengeluaranDAO.getTotalPengeluaranByDate(tanggalMulai, tanggalSelesai);
-
-            BigDecimal saldoBersih = totalPemasukan.subtract(totalPengeluaran);
+            
+            System.out.println(totalPemasukan + " + " + totalPengeluaran);
 
             String fileName = "LaporanKas_" + tanggalMulai.toString() + "_sd_" + tanggalSelesai.toString() + ".pdf";
 
             boolean pdfSukses = reportService.generatePdfReport(
                     tanggalMulai,
                     tanggalSelesai,
-                    saldoBersih,
+                    totalPemasukan,
+                    totalPengeluaran,
                     fileName
             );
 

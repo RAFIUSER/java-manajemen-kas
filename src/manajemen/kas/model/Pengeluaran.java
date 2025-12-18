@@ -16,6 +16,17 @@ public class Pengeluaran {
     private BigDecimal nominalKeluar;
     private String keterangan;
 
+    public Pengeluaran() {
+    }
+
+    public Pengeluaran(int id, String namaTransaksi, LocalDate tanggal, BigDecimal nominalKeluar, String keterangan) {
+        this.id = id;
+        this.namaTransaksi = namaTransaksi;
+        this.tanggal = tanggal;
+        this.nominalKeluar = nominalKeluar;
+        this.keterangan = keterangan;
+    }
+
     public int getId() {
         return id;
     }
@@ -55,27 +66,4 @@ public class Pengeluaran {
     public void setKeterangan(String keterangan) {
         this.keterangan = keterangan;
     }
-
-    @Override
-    public String toString() {
-        return "Pengeluaran{"
-                + "id=" + id
-                + ", namaTransaksi='" + namaTransaksi + '\''
-                + ", tanggal=" + tanggal
-                + ", nominalKeluar=" + nominalKeluar
-                + ", keterangan='" + keterangan + '\''
-                + '}';
-    }
-
-    public Pengeluaran() {
-    }
-
-    public Pengeluaran(int id, String namaTransaksi, LocalDate tanggal, BigDecimal nominalKeluar, String keterangan) {
-        this.id = id;
-        this.namaTransaksi = namaTransaksi;
-        this.tanggal = tanggal;
-        this.nominalKeluar = nominalKeluar;
-        this.keterangan = keterangan;
-    }
-
 }

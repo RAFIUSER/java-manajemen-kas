@@ -141,7 +141,7 @@ public class PemasukanDAO {
     }
 
     public BigDecimal getTotalPemasukanByDate(LocalDate startDate, LocalDate endDate) {
-        String sql = "SELECT SUM(nominalMasuk) FROM pemasukan WHERE tanggal BETWEEN ? AND ?";
+        String sql = "SELECT SUM(nominalMasuk) AS total FROM pemasukan WHERE tanggal BETWEEN ? AND ?";
         BigDecimal total = BigDecimal.ZERO;
 
         try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -149,8 +149,18 @@ public class PemasukanDAO {
             stmt.setDate(1, Date.valueOf(startDate));
             stmt.setDate(2, Date.valueOf(endDate));
 
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getBigDecimal("total");
+
+                    if (total == null) {
+                        total = BigDecimal.ZERO;
+                    }
+                }
+            }
+
         } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error hitung total pemasukan: " + e.getMessage());
         }
 
         return total;

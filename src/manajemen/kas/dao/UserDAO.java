@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import manajemen.kas.model.Pengeluaran;
 import manajemen.kas.model.User;
 import manajemen.kas.services.DBConnection;
 
