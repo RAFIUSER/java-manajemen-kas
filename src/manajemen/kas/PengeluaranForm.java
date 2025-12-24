@@ -75,6 +75,7 @@ public class PengeluaranForm extends javax.swing.JFrame {
         inputTanggal = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Aplikasi Manajemen Kas | Pengeluaran");
         setResizable(false);
 
         Sidebar.setBackground(new java.awt.Color(255, 255, 255));
@@ -249,9 +250,7 @@ public class PengeluaranForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        TabelPengeluaran.setCellSelectionEnabled(false);
         TabelPengeluaran.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TabelPengeluaran.setRowSelectionAllowed(true);
         TabelPengeluaran.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TabelPengeluaranMouseClicked(evt);

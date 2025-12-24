@@ -159,6 +159,7 @@ public class BerandaView extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Aplikasi Manajemen Kas | Beranda");
         setResizable(false);
 
         Sidebar.setBackground(new java.awt.Color(255, 255, 255));

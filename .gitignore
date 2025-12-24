@@ -1,0 +1,17 @@
+# NetBeans specific
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+nbactions.xml
+nb-configuration.xml
+
+# Log files and temporary files
+*.log
+*~
+.DS_Store
+
+# Java VM crash logs
+hs_err_pid*

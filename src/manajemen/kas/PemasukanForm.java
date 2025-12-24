@@ -71,6 +71,7 @@ public class PemasukanForm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Aplikasi Manajemen Kas | Pemasukan");
         setResizable(false);
 
         Sidebar.setBackground(new java.awt.Color(255, 255, 255));

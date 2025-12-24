@@ -64,6 +64,7 @@ public class AkunForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Aplikasi Manajemen Kas | Manajemen Akun");
         setResizable(false);
 
         Sidebar.setBackground(new java.awt.Color(255, 255, 255));
@@ -229,9 +230,7 @@ public class AkunForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        TabelAkun.setCellSelectionEnabled(false);
         TabelAkun.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        TabelAkun.setRowSelectionAllowed(true);
         TabelAkun.getTableHeader().setReorderingAllowed(false);
         TabelAkun.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
