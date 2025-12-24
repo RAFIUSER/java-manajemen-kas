@@ -34,7 +34,7 @@ Before running the application, ensure you have:
 
 1.  **Clone Project** or download the source code.
 2.  **Database Configuration**:
-    - Create a new database in MySQL named: `db_manajemen-kas`
+    - Import MySQL database file `db_manajemen-kas.sql` in output folder.
     - Database connection configuration is located in `src/manajemen/kas/services/DBConnection.java`. Default settings:
         - URL: `jdbc:mysql://localhost:3306/db_manajemen-kas`
         - Username: `root`
