@@ -3,7 +3,6 @@
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
 build/
 nbactions.xml
 nb-configuration.xml
